@@ -12,10 +12,10 @@
 
 #include "../incs/computorv1.h"
 
-float	ft_sqrtf(float nb)
+float		ft_sqrtf(float nb)
 {
-	float calc;
-	float diff;
+	float	calc;
+	float	diff;
 
 	if (nb == 0.0 || nb == 1.0)
 		return (nb);
@@ -30,21 +30,21 @@ float	ft_sqrtf(float nb)
 	return (calc);
 }
 
-float			ft_atof(const char* str, int ret, int fact, int d)
+float		ft_atof(const char *str, int ret, int fact, int d)
 {
-	int			point_seen;
+	int	point_seen;
 
 	point_seen = 0;
 	if (*str == '-' || *str == '+' || *str == '=')
 	{
-    	*str == '-' ? fact *= -1 : 0;
+		*str == '-' ? fact *= -1 : 0;
 		str += 2;
-  	}
- 	while (*str == ' ')
-  		str++;
+	}
+	while (*str == ' ')
+		str++;
 	while (*str != ' ')
 	{
-		(*str == '.') ? point_seen = 1: 0;
+		(*str == '.') ? point_seen = 1 : 0;
 		(*str == '.') ? str++ : 0;
 		d = *str - '0';
 		if (d >= 0 && d <= 9)

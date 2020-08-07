@@ -44,7 +44,6 @@ void	ft_putnbrf2(int nb, int dot)
 		write(1, ".", 1);
 		ft_putnbr(frac);
 	}
-
 }
 
 void	ft_putnbrf1(float nb_f)
@@ -59,14 +58,11 @@ void	ft_putnbrf1(float nb_f)
 	}
 	else
 		write(1, "+ ", 2);
-	//printf("nb = |%f|\n", nb_f);
-	while((float)(nb_f - (int)nb_f) != 0.0)
+	while ((float)(nb_f - (int)nb_f) != 0.0)
 	{
 		dot++;
 		nb_f *= 10;
-	//	printf("nb = |%f|\n", nb_f);
 	}
-	//printf("nb = |%f|\n", nb_f);
 	ft_putnbrf2((int)nb_f, dot);
 	return ;
 }

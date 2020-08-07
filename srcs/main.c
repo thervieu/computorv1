@@ -38,12 +38,14 @@ void	solve_013(t_equation eq)
 {
 	if (eq.degree == 0)
 	{
-		ft_putstr("All numbers (real or complex) are solution to this equation.");
+		ft_putstr("All numbers (real or complex) are \
+			solution to this equation.");
 		return ;
 	}
 	if (eq.degree == 3)
 	{
-		ft_putstr("The polynomial degree is stricly greater than 2, computorv1 can't solve this equation.\n");
+		ft_putstr("The polynomial degree is stricly gre\
+			ater than 2, computorv1 can't solve this equation.\n");
 		return ;
 	}
 	if (eq.degree == 1)
@@ -61,20 +63,25 @@ void	solve_2(t_equation eq)
 	eq.disc = (eq.coefb * eq.coefb) - (4 * eq.coefa * eq.coefc);
 	if (eq.disc > 0)
 	{
-		ft_putstr("\nDiscriminant is strictly positive, the two solutions are:\n");
-		ft_putnbrf1((((-1.0 * eq.coefb) - ft_sqrtf(eq.disc)) / (2.0 * eq.coefa)));
+		ft_putstr("\nDiscriminant is strictly positive, \
+				the two solutions are:\n");
+		ft_putnbrf1((((-1.0 * eq.coefb) - ft_sqrtf(eq.disc))
+					/ (2.0 * eq.coefa)));
 		ft_putchar('\n');
-		ft_putnbrf1((((-1.0 * eq.coefb) + ft_sqrtf(eq.disc)) / (2.0 * eq.coefa)));
+		ft_putnbrf1((((-1.0 * eq.coefb) + ft_sqrtf(eq.disc))
+					/ (2.0 * eq.coefa)));
 		ft_putchar('\n');
 	}
 	else if (eq.disc == 0)
 	{
-		ft_putstr("\nDiscriminant is equal to 0, the unique solution is:\n");
+		ft_putstr("\nDiscriminant is equal to 0\
+				, the unique solution is:\n");
 		ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
 	}
 	else if (eq.disc < 0)
 	{
-		ft_putstr("\nDiscriminant is strictly negative, the two complex solutions are:\n");
+		ft_putstr("\nDiscriminant is strictly negative, t\
+				he two complex solutions are:\n");
 		ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
 		ft_putstrf(" ", (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa));
 		ft_putstr("i\n");
@@ -97,6 +104,11 @@ void	solve(t_equation eq)
 	ft_putstrf("Polynomial degree: ", eq.degree);
 	ft_putchar('\n');
 	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
+}
+
+void		if_forest(t_equation *eq)
+{
+	
 }
 
 int		main(int ac, char **av)
@@ -125,7 +137,6 @@ int		main(int ac, char **av)
 		(av[1][i] == '=') ? eq_sign++ : 0;
 		if (av[1][i] == 'X')
 		{
-
 			tmp = ft_atof(av[1] + i + search(av[1], i), 0, 1, 0);
 			if (eq_sign == 0)
 			{
@@ -140,7 +151,7 @@ int		main(int ac, char **av)
 				(av[1][i + 2] == '1') ? eq.coefb -= tmp : 0;
 				(av[1][i + 2] == '2') ? eq.coefa -= tmp : 0;
 				(av[1][i + 2] == '3') ? eq.coef3 -= tmp : 0;
-			}	
+			}
 		}
 		i++;
 	}
