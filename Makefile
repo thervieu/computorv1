@@ -1,6 +1,6 @@
 NAME			= computorv1
 
-SRCS			= ./srcs/main.c ./srcs/ft_putnbrf.c ./srcs/ft_putstr.c ./srcs/handle_float.c
+SRCS			= ./srcs/main.c ./srcs/ft_putnbrf.c ./srcs/ft_putstr.c ./srcs/handle_float.c ./srcs/solve.c
 OBJS			= $(SRCS:.c=.o)
 
 CC				= gcc

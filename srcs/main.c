@@ -34,81 +34,33 @@ void	init_eq(t_equation *eq)
 	eq->sol2 = 0;
 }
 
-void	solve_013(t_equation eq)
+void		if_forest(t_equation *eq, char c, float tmp, int eq_sign)
 {
-	if (eq.degree == 0)
+	if (eq_sign == 0)
 	{
-		ft_putstr("All numbers (real or complex) are \
-			solution to this equation.");
-		return ;
+		(c == '0') ? eq->coefc += tmp : 0;
+		(c == '1') ? eq->coefb += tmp : 0;
+		(c == '2') ? eq->coefa += tmp : 0;
+		(c == '3') ? eq->coef3 += tmp : 0;
 	}
-	if (eq.degree == 3)
+	else
 	{
-		ft_putstr("The polynomial degree is stricly gre\
-			ater than 2, computorv1 can't solve this equation.\n");
-		return ;
-	}
-	if (eq.degree == 1)
-	{
-		ft_putstr("The solution is\n");
-		eq.sol1 = (eq.coefc != 0) ? -1.0 * eq.coefb / eq.coefc : 0;
-		ft_putnbrf1(eq.sol1);
-		ft_putchar('\n');
-		return ;
+		(c == '0') ? eq->coefc -= tmp : 0;
+		(c == '1') ? eq->coefb -= tmp : 0;
+		(c == '2') ? eq->coefa -= tmp : 0;
+		(c == '3') ? eq->coef3 -= tmp : 0;
 	}
 }
 
-void	solve_2(t_equation eq)
+void	first_coef(char *str, int *i, t_equation *eq, float tmp)
 {
-	eq.disc = (eq.coefb * eq.coefb) - (4 * eq.coefa * eq.coefc);
-	if (eq.disc > 0)
-	{
-		ft_putstr("\nDiscriminant is strictly positive, \
-				the two solutions are:\n");
-		ft_putnbrf1((((-1.0 * eq.coefb) - ft_sqrtf(eq.disc))
-					/ (2.0 * eq.coefa)));
-		ft_putchar('\n');
-		ft_putnbrf1((((-1.0 * eq.coefb) + ft_sqrtf(eq.disc))
-					/ (2.0 * eq.coefa)));
-		ft_putchar('\n');
-	}
-	else if (eq.disc == 0)
-	{
-		ft_putstr("\nDiscriminant is equal to 0\
-				, the unique solution is:\n");
-		ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
-	}
-	else if (eq.disc < 0)
-	{
-		ft_putstr("\nDiscriminant is strictly negative, t\
-				he two complex solutions are:\n");
-		ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
-		ft_putstrf(" ", (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa));
-		ft_putstr("i\n");
-		ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
-		ft_putstrf(" ", (+1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa));
-		ft_putstr("i\n");
-	}
-}
-
-void	solve(t_equation eq)
-{
-	(eq.coefc != 0) ? eq.degree = 0 : 0;
-	(eq.coefb != 0) ? eq.degree = 1 : 0;
-	(eq.coefa != 0) ? eq.degree = 2 : 0;
-	(eq.coef3 != 0) ? eq.degree = 3 : 0;
-	ft_putstrf("Reduced form: ", eq.coefc);
-	ft_putstrf(" * X^0 ", eq.coefb);
-	ft_putstrf(" * X^1 ", eq.coefa);
-	ft_putstr(" * X^2 = 0\n");
-	ft_putstrf("Polynomial degree: ", eq.degree);
-	ft_putchar('\n');
-	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
-}
-
-void		if_forest(t_equation *eq)
-{
-	
+	while (str[*i] != 'X')
+		(*i)++;
+	(str[*i + 2] == '0') ? eq->coefc = tmp : 0;
+	(str[*i + 2] == '1') ? eq->coefb = tmp : 0;
+	(str[*i + 2] == '2') ? eq->coefa = tmp : 0;
+	(str[*i + 2] == '3') ? eq->coef3 = tmp : 0;
+	(*i)++;
 }
 
 int		main(int ac, char **av)
@@ -125,33 +77,14 @@ int		main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	tmp = ft_atof(av[1], 0, 1, 0);
-	while (av[1][i] != 'X')
-		i++;
-	(av[1][i + 2] == '0') ? eq.coefc = tmp : 0;
-	(av[1][i + 2] == '1') ? eq.coefb = tmp : 0;
-	(av[1][i + 2] == '2') ? eq.coefa = tmp : 0;
-	(av[1][i + 2] == '3') ? eq.coef3 = tmp : 0;
-	i++;
+	first_coef(av[1], &i, &eq, tmp);
 	while (av[1][i])
 	{
 		(av[1][i] == '=') ? eq_sign++ : 0;
 		if (av[1][i] == 'X')
 		{
 			tmp = ft_atof(av[1] + i + search(av[1], i), 0, 1, 0);
-			if (eq_sign == 0)
-			{
-				(av[1][i + 2] == '0') ? eq.coefc += tmp : 0;
-				(av[1][i + 2] == '1') ? eq.coefb += tmp : 0;
-				(av[1][i + 2] == '2') ? eq.coefa += tmp : 0;
-				(av[1][i + 2] == '3') ? eq.coef3 += tmp : 0;
-			}
-			else
-			{
-				(av[1][i + 2] == '0') ? eq.coefc -= tmp : 0;
-				(av[1][i + 2] == '1') ? eq.coefb -= tmp : 0;
-				(av[1][i + 2] == '2') ? eq.coefa -= tmp : 0;
-				(av[1][i + 2] == '3') ? eq.coef3 -= tmp : 0;
-			}
+			if_forest(&eq, av[1][i + 2], tmp, eq_sign);
 		}
 		i++;
 	}
