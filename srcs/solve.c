@@ -70,10 +70,12 @@ void	solve(t_equation eq)
 	(eq.coefb != 0) ? eq.degree = 1 : 0;
 	(eq.coefa != 0) ? eq.degree = 2 : 0;
 	(eq.coef3 != 0) ? eq.degree = 3 : 0;
+	if (eq.degree != 3) {
 	printf("\nReduced form: %c %.3f", eq.coefa > 0 ? '+' : '-', absf(eq.coefa));
 	printf(" * X^2 %c %.3f", eq.coefb > 0 ? '+' : '-', absf(eq.coefb));
 	printf(" * X^1 %c %.3f", eq.coefc > 0 ? '+' : '-', absf(eq.coefc));
 	printf(" * X^0 = 0\n");
 	printf("\nPolynomial degree: %d\n\n", eq.degree);
+	}
 	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
 }

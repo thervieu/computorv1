@@ -18,6 +18,7 @@ typedef struct	s_equation
 }				t_equation;
 
 float		ft_atof(const char *str, int *i);
+int		ft_atoi(const char *str, int *i);
 float		ft_sqrtf(float nb);
 void		solve(t_equation eq);
 

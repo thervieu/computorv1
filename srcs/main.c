@@ -11,21 +11,21 @@ void	init_eq(t_equation *eq)
 	eq->sol2 = 0;
 }
 
-void		if_forest(t_equation *eq, char c, float tmp, int eq_sign)
+void		if_forest(t_equation *eq, int c, float tmp, int eq_sign)
 {
 	if (eq_sign == 0)
 	{
-		(c == '0') ? eq->coefc += tmp : 0;
-		(c == '1') ? eq->coefb += tmp : 0;
-		(c == '2') ? eq->coefa += tmp : 0;
-		(c >= '3') ? eq->coef3 += tmp : 0;
+		(c == 0) ? eq->coefc += tmp : 0;
+		(c == 1) ? eq->coefb += tmp : 0;
+		(c == 2) ? eq->coefa += tmp : 0;
+		(c >= 3) ? eq->coef3 += tmp : 0;
 	}
 	else
 	{
-		(c == '0') ? eq->coefc -= tmp : 0;
-		(c == '1') ? eq->coefb -= tmp : 0;
-		(c == '2') ? eq->coefa -= tmp : 0;
-		(c >= '3') ? eq->coef3 -= tmp : 0;
+		(c == 0) ? eq->coefc -= tmp : 0;
+		(c == 1) ? eq->coefb -= tmp : 0;
+		(c == 2) ? eq->coefa -= tmp : 0;
+		(c >= 3) ? eq->coef3 -= tmp : 0;
 	}
 }
 
@@ -92,8 +92,9 @@ int		main(int ac, char **av)
 			continue ;
 		}
 		i++;
-		if_forest(&eq, str[i], tmp, eq_sign);
-		i++;
+		if_forest(&eq, ft_atoi(str, &i), tmp, eq_sign);
+		if (eq.coef3)
+			break ;
 	}
 	// print_eq(eq);
 	solve(eq);

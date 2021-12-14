@@ -46,3 +46,12 @@ float		ft_atof(const char *str, int *i)
 		(*i)++;
 	return (ret * fact);
 }
+
+int		ft_atoi(const char *str, int *i) {
+	int ret = 0;
+	while (str[*i] >= '0' && str[*i] <= '9') {
+		ret = (ret * 10) + (str[*i] - '0');
+		(*i)++;
+	}
+	return (ret);
+}
