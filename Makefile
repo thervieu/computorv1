@@ -23,6 +23,7 @@ $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 
 $(NAME): $(OBJS)
 	@gcc $(FLAGS) -o $(NAME) $(OBJS)
+	@echo ""
 	@echo "Exec computorv1 created !"
 	@echo "usage: ./computorv1 [equation]"
 
