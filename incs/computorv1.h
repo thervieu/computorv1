@@ -3,6 +3,7 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 
 typedef struct	s_equation
 {
@@ -22,7 +23,7 @@ void		ft_putstr(char *str);
 void		ft_putnbr(int nb);
 void		ft_putnbrf1(float nb_f);
 void		ft_putstrf(char *str, float nb);
-float		ft_atof(const char *str, int ret, int fact, int d);
+float		ft_atof(const char *str, int *i);
 float		ft_sqrtf(float nb);
 void		solve(t_equation eq);
 

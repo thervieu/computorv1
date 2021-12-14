@@ -1,16 +1,5 @@
 #include "../incs/computorv1.h"
 
-int		search(char *str, int pos)
-{
-	int		i;
-
-	i = 0;
-	while (str[pos + i] && str[pos + i] != '+' && str[pos + i] != '-'
-		&& str[pos + i] != '=')
-		i--;
-	return (i);
-}
-
 void	init_eq(t_equation *eq)
 {
 	eq->degree = 0;
@@ -40,21 +29,42 @@ void		if_forest(t_equation *eq, char c, float tmp, int eq_sign)
 	}
 }
 
-void	first_coef(char *str, int *i, t_equation *eq, float tmp)
-{
-	while (str[*i] != 'X')
-		(*i)++;
-	(str[*i + 2] == '0') ? eq->coefc = tmp : 0;
-	(str[*i + 2] == '1') ? eq->coefb = tmp : 0;
-	(str[*i + 2] == '2') ? eq->coefa = tmp : 0;
-	(str[*i + 2] == '3') ? eq->coef3 = tmp : 0;
-	(*i)++;
+char *get_eq_no_space(const char *str) {
+	int count = 0;
+	int i = 0;
+	while (str[i]) {
+		if (str[i] != ' ')
+			count++;
+		i++;
+	}
+	char *rtn;
+	if (!(rtn = malloc((count + 1) * sizeof(char))))
+		return (NULL);
+	i = 0;
+	int j = 0;
+	while (str[i]) {
+		if (str[i] != ' ') {
+			rtn[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	rtn[j] = '\0';
+	return (rtn);
+}
+
+void print_eq(t_equation eq) {
+	printf("\neq.degree = |%d|\n", eq.degree);
+	printf("eq.coef3 = |%f|\n", eq.coef3);
+	printf("eq.coefa = |%f|\n", eq.coefa);
+	printf("eq.coefb = |%f|\n", eq.coefb);
+	printf("eq.coefc = |%f|\n", eq.coefc);
 }
 
 int		main(int ac, char **av)
 {
 	if (ac != 2) {
-		printf("Wrong number of arguments\nUsage: ./computorv1 [equation]");
+		printf("Usage: ./computorv1 [equation]\n");
 		return (1);
 	}
 
@@ -64,20 +74,23 @@ int		main(int ac, char **av)
 	t_equation	eq;
 
 	init_eq(&eq);
-	eq_sign = 0;
-	if (ac != 2)
-		return (1);
-	tmp = ft_atof(av[1], 0, 1, 0);
-	first_coef(av[1], &i, &eq, tmp);
-	while (av[1][i++])
+	char *str = get_eq_no_space(av[1]);
+	while (str[i])
 	{
-		(av[1][i] == '=') ? eq_sign++ : 0;
-		if (av[1][i] == 'X')
-		{
-			tmp = ft_atof(av[1] + i + search(av[1], i), 0, 1, 0);
-			if_forest(&eq, av[1][i + 2], tmp, eq_sign);
+		tmp = ft_atof(str, &i);
+		if (i == ft_strlen(str))
+			break ;
+		if (str[i] == '=') {
+			eq_sign++;
+			i++;
+			continue ;
 		}
+		i++;
+		if_forest(&eq, str[i], tmp, eq_sign);
+		i++;
 	}
+	// print_eq(eq);
 	solve(eq);
+	free(str);
 	return (0);
 }

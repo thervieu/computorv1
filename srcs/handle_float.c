@@ -15,29 +15,34 @@ float		ft_sqrtf(float nb) // babylonian method
 	return (calc);
 }
 
-float		ft_atof(const char *str, int ret, int fact, int d)
+float		ft_atof(const char *str, int *i)
 {
-	int	point_seen;
+	int	point_seen = 0;
+	int fact = 1;
+	int ret = 0;
+	int d = 0;
 
-	point_seen = 0;
-	if (*str == '-' || *str == '+' || *str == '=')
+	if (str[*i] == '-' || str[*i] == '+')
 	{
-		*str == '-' ? fact *= -1 : 0;
-		str += 2;
+		str[*i] == '-' ? fact *= -1 : 0;
+		(*i)++;
 	}
-	while (*str == ' ')
-		str++;
-	while (*str != ' ')
+	while ((str[*i] >= '0' && str[*i] <= '9') || str[*i] == '.')
 	{
-		(*str == '.') ? point_seen = 1 : 0;
-		(*str == '.') ? str++ : 0;
-		d = *str - '0';
+		if (str[*i] == '.') {
+			point_seen = 1;
+			(*i)++;
+			continue;
+		}
+		d = str[*i] - '0';
 		if (d >= 0 && d <= 9)
 		{
 			(point_seen == 1) ? fact /= 10.0f : 0;
 			ret = ret * 10.0f + (float)d;
 		}
-		str++;
+		(*i)++;
 	}
+	while (str[*i] && str[*i] != '^' && str[*i] != '=')
+		(*i)++;
 	return (ret * fact);
 }
