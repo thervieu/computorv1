@@ -17,12 +17,6 @@ typedef struct	s_equation
 	float		sol2;
 }				t_equation;
 
-int			ft_strlen(char *str);
-void		ft_putchar(char c);
-void		ft_putstr(char *str);
-void		ft_putnbr(int nb);
-void		ft_putnbrf1(float nb_f);
-void		ft_putstrf(char *str, float nb);
 float		ft_atof(const char *str, int *i);
 float		ft_sqrtf(float nb);
 void		solve(t_equation eq);
