@@ -1,15 +1,12 @@
 #include "../incs/computorv1.h"
 
-float		ft_sqrtf(float nb)
+float		ft_sqrtf(float nb) // babylonian method
 {
-	float	calc;
-	float	diff;
-
 	if (nb == 0.0 || nb == 1.0)
 		return (nb);
-	calc = nb;
-	diff = calc;
-	calc = 0.5 * (calc + nb / calc);
+
+	float	calc = nb;
+	float	diff = 1;
 	while (calc != diff)
 	{
 		diff = calc;
