@@ -1,23 +1,41 @@
-NAME			= computorv1
+NAME = computorv1
 
-SRCS			= ./srcs/main.c ./srcs/ft_putnbrf.c ./srcs/ft_putstr.c ./srcs/handle_float.c ./srcs/solve.c
-OBJS			= $(SRCS:.c=.o)
+SRCS_DIR = ./srcs/
 
-CC				= gcc
-RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -I.
+SRCS =	main.c			\
+		ft_putnbrf.c		\
+		ft_putstr.c		\
+		handle_float.c	\
+		solve.c
 
-all:			$(NAME)
+OBJS_DIR = objs/
 
-$(NAME):		$(OBJS)
-				gcc ${CFLAGS} -o ${NAME} ${OBJS}
+OBJ = $(SRCS:.c=.o)
+
+OBJS = $(addprefix $(OBJS_DIR), $(OBJ))
+
+FLAGS = -Wall -Wextra -Werror
+
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c
+	@mkdir -p $(OBJS_DIR)
+	@echo "Compiling" $<
+	@gcc $(FLAGS) -c $< -o $@
+
+$(NAME): $(OBJS)
+	@gcc $(FLAGS) -o $(NAME) $(OBJS)
+	@echo "Exec computorv1 created !"
+	@echo "usage: ./computorv1 [equation]"
+
+all: $(NAME)
 
 clean:
-				$(RM) $(OBJS) $(BONUS_OBJS)
+	@echo "Removing objs"
+	@rm -rf $(OBJS_DIR)
 
-fclean:			clean
-				$(RM) $(NAME)
+fclean: clean
+	@echo "Removing exec"
+	@rm -f $(NAME)
 
-re:				fclean $(NAME)
+re: fclean all
 
-.PHONY:			all clean fclean re
+.PHONY:	all clean fclean re
