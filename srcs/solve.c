@@ -1,37 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   solve.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: thervieu <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/07 20:24:07 by thervieu          #+#    #+#             */
-/*   Updated: 2020/08/07 20:24:08 by thervieu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../incs/computorv1.h"
 
 void	solve_013(t_equation eq)
 {
 	if (eq.degree == 0)
 	{
-		ft_putstr("All numbers (real or complex) are \
-			solution to this equation.");
+		if (eq.coefc == 0)
+			printf("All numbers (real or complex) are solution to this equation.\n");
+		else
+			printf("This equation is false, it doesn't make sense to talk about its solutions.\n");
 		return ;
 	}
-	if (eq.degree == 3)
+	else if (eq.degree == 1)
 	{
-		ft_putstr("The polynomial degree is stricly gre\
-			ater than 2, computorv1 can't solve this equation.\n");
-		return ;
-	}
-	if (eq.degree == 1)
-	{
-		ft_putstr("The solution is\n");
+		printf("The unique solution is ");
 		eq.sol1 = (eq.coefc != 0) ? -1.0 * eq.coefb / eq.coefc : 0;
 		ft_putnbrf1(eq.sol1);
 		ft_putchar('\n');
+		return ;
+	}
+	else if (eq.degree == 3)
+	{
+		printf("The polynomial degree is stricly greater than 2, computorv1 can't solve this equation.\n");
 		return ;
 	}
 }
@@ -81,6 +70,8 @@ void	solve(t_equation eq)
 	ft_putstrf(" * X^0 ", eq.coefb);
 	ft_putstrf(" * X^1 ", eq.coefa);
 	ft_putstr(" * X^2 = 0\n");
-	ft_putstrf("Polynomial degree: ", eq.degree);
+	ft_putstr("Polynomial degree: ");
+	ft_putchar('0' + eq.degree);
+	write(1, "\n", 1);
 	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
 }

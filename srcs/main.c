@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: thervieu <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/05 16:13:59 by thervieu          #+#    #+#             */
-/*   Updated: 2020/08/05 16:14:02 by thervieu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../incs/computorv1.h"
 
 int		search(char *str, int pos)
@@ -25,7 +13,7 @@ int		search(char *str, int pos)
 
 void	init_eq(t_equation *eq)
 {
-	eq->degree = -1;
+	eq->degree = 0;
 	eq->coefc = 0;
 	eq->coefb = 0;
 	eq->coefa = 0;
@@ -65,20 +53,23 @@ void	first_coef(char *str, int *i, t_equation *eq, float tmp)
 
 int		main(int ac, char **av)
 {
-	int			i;
-	int			eq_sign;
+	if (ac != 2) {
+		printf("Wrong number of arguments\nUsage: ./computorv1 [equation]");
+		return (1);
+	}
+
+	int			i = 0;
+	int			eq_sign = 0;
 	float		tmp;
 	t_equation	eq;
 
 	init_eq(&eq);
 	eq_sign = 0;
-	i = 0;
-	tmp = 0;
 	if (ac != 2)
 		return (1);
 	tmp = ft_atof(av[1], 0, 1, 0);
 	first_coef(av[1], &i, &eq, tmp);
-	while (av[1][i])
+	while (av[1][i++])
 	{
 		(av[1][i] == '=') ? eq_sign++ : 0;
 		if (av[1][i] == 'X')
@@ -86,7 +77,6 @@ int		main(int ac, char **av)
 			tmp = ft_atof(av[1] + i + search(av[1], i), 0, 1, 0);
 			if_forest(&eq, av[1][i + 2], tmp, eq_sign);
 		}
-		i++;
 	}
 	solve(eq);
 	return (0);
