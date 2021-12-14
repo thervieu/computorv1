@@ -18,14 +18,14 @@ void		if_forest(t_equation *eq, char c, float tmp, int eq_sign)
 		(c == '0') ? eq->coefc += tmp : 0;
 		(c == '1') ? eq->coefb += tmp : 0;
 		(c == '2') ? eq->coefa += tmp : 0;
-		(c == '3') ? eq->coef3 += tmp : 0;
+		(c >= '3') ? eq->coef3 += tmp : 0;
 	}
 	else
 	{
 		(c == '0') ? eq->coefc -= tmp : 0;
 		(c == '1') ? eq->coefb -= tmp : 0;
 		(c == '2') ? eq->coefa -= tmp : 0;
-		(c == '3') ? eq->coef3 -= tmp : 0;
+		(c >= '3') ? eq->coef3 -= tmp : 0;
 	}
 }
 
@@ -59,6 +59,12 @@ void print_eq(t_equation eq) {
 	printf("eq.coefa = |%f|\n", eq.coefa);
 	printf("eq.coefb = |%f|\n", eq.coefb);
 	printf("eq.coefc = |%f|\n", eq.coefc);
+}
+
+int ft_strlen(char *str) {
+	int i = 0;
+	while (str[i]) i++;
+	return (i);
 }
 
 int		main(int ac, char **av)

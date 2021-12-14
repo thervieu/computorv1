@@ -18,8 +18,8 @@ float		ft_sqrtf(float nb) // babylonian method
 float		ft_atof(const char *str, int *i)
 {
 	int	point_seen = 0;
-	int fact = 1;
-	int ret = 0;
+	float fact = 1;
+	float ret = 0;
 	int d = 0;
 
 	if (str[*i] == '-' || str[*i] == '+')

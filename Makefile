@@ -3,8 +3,6 @@ NAME = computorv1
 SRCS_DIR = ./srcs/
 
 SRCS =	main.c			\
-		ft_putnbrf.c		\
-		ft_putstr.c		\
 		handle_float.c	\
 		solve.c
 

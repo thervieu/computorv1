@@ -1,39 +1,32 @@
 #include "../incs/computorv1.h"
 
+float absf(float nb) {
+	if (nb == 0) return 0;
+	return (nb > 0 ? nb : nb * (float)-1);
+}
+
 void	solve_013(t_equation eq)
 {
 	if (eq.degree == 0)
 	{
 		if (eq.coefc == 0)
-			ft_putstr("All numbers (real or complex) are solution to this equation.\n");
+			printf("All numbers (real or complex) are solution to this equation.\n");
 		else
-			ft_putstr("This equation is false, it doesn't make sense to talk about its solutions.\n");
+			printf("This equation is false, it doesn't make sense to talk about its solutions.\n");
 		return ;
 	}
 	else if (eq.degree == 1)
 	{
-		ft_putstr("The unique solution is ");
+		printf("The unique solution is ");
 		eq.sol1 = (eq.coefc != 0) ? -1.0 * eq.coefb / eq.coefc : 0;
-		ft_putnbrf1(eq.sol1);
-		ft_putchar('\n');
+		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
 		return ;
 	}
 	else if (eq.degree == 3)
 	{
-		ft_putstr("The polynomial degree is stricly greater than 2, computorv1 can't solve this equation.\n");
+		printf("The polynomial degree is stricly greater than 2, computorv1 can't solve this equation.\n");
 		return ;
 	}
-}
-
-void	solve_complex(t_equation eq)
-{
-	ft_putstr("Discriminant is strictly negative, the two complex solutions are:\n");
-	ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
-	ft_putstrf(" ", (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa));
-	ft_putstr("i\n");
-	ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
-	ft_putstrf(" ", (+1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa));
-	ft_putstr("i\n");
 }
 
 void	solve_2(t_equation eq)
@@ -41,21 +34,34 @@ void	solve_2(t_equation eq)
 	eq.disc = (eq.coefb * eq.coefb) - (4 * eq.coefa * eq.coefc);
 	if (eq.disc > 0)
 	{
-		ft_putstr("Discriminant is strictly positive, the two real solutions are:\n");
-		ft_putnbrf1((((-1.0 * eq.coefb) - ft_sqrtf(eq.disc))
-					/ (2.0 * eq.coefa)));
-		ft_putchar('\n');
-		ft_putnbrf1((((-1.0 * eq.coefb) + ft_sqrtf(eq.disc))
-					/ (2.0 * eq.coefa)));
-		ft_putchar('\n');
+		printf("Discriminant is strictly positive, the two real solutions are:\n");
+		eq.sol1 = (((-1.0 * eq.coefb) - ft_sqrtf(eq.disc))
+					/ (2.0 * eq.coefa));
+		eq.sol2 = (((-1.0 * eq.coefb) + ft_sqrtf(eq.disc))
+					/ (2.0 * eq.coefa));
+		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+		printf("%c %.3f\n", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
 	}
 	else if (eq.disc == 0)
 	{
-		ft_putstr("Discriminant is equal to 0, the unique solution is ");
-		ft_putnbrf1((-1.0 * eq.coefb) / (2.0 * eq.coefa));
+		printf("Discriminant is equal to 0,\nthe unique solution is ");
+		eq.sol1 = (-1.0 * eq.coefb) / (2.0 * eq.coefa);
+		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
 	}
-	else if (eq.disc < 0)
-		solve_complex(eq);
+	else if (eq.disc < 0){
+		printf("Discriminant is strictly negative, the two complex solutions are:\n");
+		eq.sol1 = (-1.0 * eq.coefb) / (2.0 * eq.coefa);
+		printf("%c %.3f ", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+
+		eq.sol1 = (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa);
+		printf("%c %.3f i\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+
+		eq.sol2 = (-1.0 * eq.coefb) / (2.0 * eq.coefa);
+		printf("%c %.3f ", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
+
+		eq.sol2 = (+1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa);
+		printf("%c %.3f i\n", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
+	}
 }
 
 void	solve(t_equation eq)
@@ -64,12 +70,10 @@ void	solve(t_equation eq)
 	(eq.coefb != 0) ? eq.degree = 1 : 0;
 	(eq.coefa != 0) ? eq.degree = 2 : 0;
 	(eq.coef3 != 0) ? eq.degree = 3 : 0;
-	ft_putstrf("\nReduced form: ", eq.coefa);
-	ft_putstrf(" * X^2 ", eq.coefb);
-	ft_putstrf(" * X^1 ", eq.coefc);
-	ft_putstr(" * X^0 = 0\n");
-	ft_putstr("\nPolynomial degree: ");
-	ft_putchar('0' + eq.degree);
-	write(1, "\n\n", 2);
+	printf("\nReduced form: %c %.3f", eq.coefa > 0 ? '+' : '-', absf(eq.coefa));
+	printf(" * X^2 %c %.3f", eq.coefb > 0 ? '+' : '-', absf(eq.coefb));
+	printf(" * X^1 %c %.3f", eq.coefc > 0 ? '+' : '-', absf(eq.coefc));
+	printf(" * X^0 = 0\n");
+	printf("\nPolynomial degree: %d\n\n", eq.degree);
 	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
 }

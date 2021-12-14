@@ -22,7 +22,7 @@ void	ft_putnbrf2(int nb, int dot)
 	power_10 = 1;
 	if (dot == 0)
 		ft_putnbr(nb);
-	else
+	else 
 	{
 		while (dot--)
 			power_10 *= 10;
@@ -46,11 +46,13 @@ void	ft_putnbrf1(float nb_f)
 	}
 	else
 		write(1, "+ ", 2);
+	printf("float: |%f|\n", nb_f);
 	while ((float)(nb_f - (int)nb_f) != 0.0)
 	{
 		dot++;
 		nb_f *= 10;
 	}
+	printf("dot: |%d|\n", dot);
 	ft_putnbrf2((int)nb_f, dot);
 	return ;
 }
