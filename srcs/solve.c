@@ -85,10 +85,10 @@ void	solve_2(t_equation eq)
 void	solve(t_equation eq)
 {
 	printf("\nReduced form:");
-	for (int i = 199999 ; i >= 0; i--) {
-		if (eq.coefs[i] != 0) {
-			printf(" %c %.3f * X^%d", eq.coefs[i] >= 0 ? '+' : '-', absf(eq.coefs[i]), i);
-			if (eq.degree == 0) eq.degree = i;
+	for (int power = 199999 ; power >= 0; power--) {
+		if (eq.coefs[power] != 0) {
+			printf(" %c %.3f * X^%d", eq.coefs[power] >= 0 ? '+' : '-', absf(eq.coefs[power]), power);
+			if (eq.degree == 0) eq.degree = power;
 		}
 	}
 	printf(" = 0\n");
