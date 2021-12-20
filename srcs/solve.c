@@ -91,6 +91,8 @@ void	solve(t_equation eq)
 			if (eq.degree == 0) eq.degree = power;
 		}
 	}
+
+	if (eq.degree == 0 && eq.coefs[0] == 0) printf(" 0");
 	printf(" = 0\n");
 	printf("\nPolynomial degree: %d\n", eq.degree);
 	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
