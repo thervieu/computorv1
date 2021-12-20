@@ -9,73 +9,89 @@ void	solve_013(t_equation eq)
 {
 	if (eq.degree == 0)
 	{
-		if (eq.coefc == 0)
-			printf("All numbers (real or complex) are solution to this equation.\n");
+		if (eq.coefs[0] == 0)
+			printf("\nAll numbers (real or complex) are solution to this equation.\n");
 		else
-			printf("This equation is false, it doesn't make sense to talk about its solutions.\n");
+			printf("\nThis equation is false, it doesn't make sense to talk about its solutions.\n");
 		return ;
 	}
 	else if (eq.degree == 1)
 	{
-		printf("The unique solution is ");
-		eq.sol1 = (eq.coefc != 0) ? -1.0 * eq.coefb / eq.coefc : 0;
-		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+		printf("\nThe unique solution is -c / b\n\n");
+		printf("Replacing with the values,\n");
+		eq.coefs[1] != 0 ? printf("(-1 * %.3f) / %.3f\n", eq.coefs[0], eq.coefs[1]) : printf("0\n");
+		eq.sol1 = (eq.coefs[1] != 0) ? -1.0 * eq.coefs[0] / eq.coefs[1] : 0;
+		printf("\nAfter calulation the solution is\n");
+		printf("%c %.3f\n", eq.sol1 >= 0 ? '+' : '-', absf(eq.sol1));
 		return ;
 	}
-	else if (eq.degree == 3)
+	else if (eq.degree >= 3)
 	{
-		printf("The polynomial degree is stricly greater than 2, computorv1 can't solve this equation.\n");
+		printf("\nThe polynomial degree is stricly greater than 2, computorv1 can't solve this equation.\n");
 		return ;
 	}
 }
 
 void	solve_2(t_equation eq)
 {
-	eq.disc = (eq.coefb * eq.coefb) - (4 * eq.coefa * eq.coefc);
+	printf("\nDiscriminant = b^2 - (4 * a * c)\n");
+	printf("Discriminant = (%.3f)^2 - (4 * %.3f * %.3f)\n", eq.coefs[1], eq.coefs[0], eq.coefs[2]);
+	eq.disc = (eq.coefs[1] * eq.coefs[1]) - (4 * eq.coefs[2] * eq.coefs[0]);
+	printf("Discriminant = %.3f\n\n", eq.disc);
 	if (eq.disc > 0)
 	{
-		printf("Discriminant is strictly positive, the two real solutions are:\n");
-		eq.sol1 = (((-1.0 * eq.coefb) - ft_sqrtf(eq.disc))
-					/ (2.0 * eq.coefa));
-		eq.sol2 = (((-1.0 * eq.coefb) + ft_sqrtf(eq.disc))
-					/ (2.0 * eq.coefa));
+		printf("Discriminant is strictly positive.\nThe two real solutions are,\n- b - sqrt(delta) / (2 * a)\nand:\n- b + sqrt(delta) / (2 * a)\n\n");
+		printf("Replacing with the values,\n");
+		printf("(-1 * %.3f) - (-1 * sqrt(%.3f)) / (2 * %.3f)\nand\n", eq.coefs[1], eq.disc, eq.coefs[2]);
+		printf("(-1 * %.3f) + (-1 * sqrt(%.3f)) / (2 * %.3f)\n", eq.coefs[1], eq.disc, eq.coefs[2]);
+		printf("\nAfter calulation the solutions are\n");
+		eq.sol1 = (((-1.0 * eq.coefs[1]) - ft_sqrtf(eq.disc))
+					/ (2.0 * eq.coefs[2]));
+		eq.sol2 = (((-1.0 * eq.coefs[1]) + ft_sqrtf(eq.disc))
+					/ (2.0 * eq.coefs[2]));
 		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
 		printf("%c %.3f\n", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
 	}
 	else if (eq.disc == 0)
 	{
-		printf("Discriminant is equal to 0,\nthe unique solution is ");
-		eq.sol1 = (-1.0 * eq.coefb) / (2.0 * eq.coefa);
+		printf("Discriminant is equal to 0.\nthe unique solution is,\n-b/(2*a)\n\n");
+		printf("Replacing with the values,\n");
+		printf("-1 * %.3f / (2 * %.3f)\n", eq.coefs[1], eq.coefs[2]);
+		eq.sol1 = (-1.0 * eq.coefs[1]) / (2.0 * eq.coefs[2]);
+		printf("\nAfter calulation the solution is\n");
 		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
 	}
 	else if (eq.disc < 0){
-		printf("Discriminant is strictly negative, the two complex solutions are:\n");
-		eq.sol1 = (-1.0 * eq.coefb) / (2.0 * eq.coefa);
+		printf("Discriminant is strictly negative.\n");
+		printf("The two complex solutions are, \n- b - (sqrt(-delta) * i) / (2 * a)\nand:\n- b + (sqrt(-delta) * i) / (2 * a)\n\n");
+		printf("Replacing with the values,\n");
+		printf("(-1 * %.3f) - (-1 * sqrt(%.3f)) * i / (2 * %.3f)\nand\n", eq.coefs[1], -1 * eq.disc, eq.coefs[2]);
+		printf("(-1 * %.3f) + (-1 * sqrt(%.3f)) * i / (2 * %.3f)\n", eq.coefs[1], -1 * eq.disc, eq.coefs[2]);
+		printf("\nAfter calulation the solutions are\n");
+		eq.sol1 = (-1.0 * eq.coefs[1]) / (2.0 * eq.coefs[2]);
 		printf("%c %.3f ", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
 
-		eq.sol1 = (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa);
+		eq.sol1 = (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefs[2]);
 		printf("%c %.3f i\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
 
-		eq.sol2 = (-1.0 * eq.coefb) / (2.0 * eq.coefa);
+		eq.sol2 = (-1.0 * eq.coefs[1]) / (2.0 * eq.coefs[2]);
 		printf("%c %.3f ", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
 
-		eq.sol2 = (+1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefa);
+		eq.sol2 = (+1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefs[2]);
 		printf("%c %.3f i\n", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
 	}
 }
 
 void	solve(t_equation eq)
 {
-	(eq.coefc != 0) ? eq.degree = 0 : 0;
-	(eq.coefb != 0) ? eq.degree = 1 : 0;
-	(eq.coefa != 0) ? eq.degree = 2 : 0;
-	(eq.coef3 != 0) ? eq.degree = 3 : 0;
-	if (eq.degree != 3) {
-	printf("\nReduced form: %c %.3f", eq.coefa > 0 ? '+' : '-', absf(eq.coefa));
-	printf(" * X^2 %c %.3f", eq.coefb > 0 ? '+' : '-', absf(eq.coefb));
-	printf(" * X^1 %c %.3f", eq.coefc > 0 ? '+' : '-', absf(eq.coefc));
-	printf(" * X^0 = 0\n");
-	printf("\nPolynomial degree: %d\n\n", eq.degree);
+	printf("\nReduced form:");
+	for (int i = 200000 ; i > 0; i--) {
+		if (eq.coefs[i] != 0) {
+			printf(" %c %.3f * X^%d", eq.coefs[i] > 0 ? '+' : '-', absf(eq.coefs[i]), i);
+			if (eq.degree == 0) eq.degree = i;
+		}
 	}
+	printf(" = 0\n");
+	printf("\nPolynomial degree: %d\n", eq.degree);
 	(eq.degree != 2) ? solve_013(eq) : solve_2(eq);
 }
