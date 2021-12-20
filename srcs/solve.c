@@ -19,8 +19,8 @@ void	solve_013(t_equation eq)
 	{
 		printf("\nThe unique solution is -c / b\n\n");
 		printf("Replacing with the values,\n");
-		eq.coefs[1] != 0 ? printf("(-1 * %.3f) / %.3f\n", eq.coefs[0], eq.coefs[1]) : printf("0\n");
-		eq.sol1 = (eq.coefs[1] != 0) ? -1.0 * eq.coefs[0] / eq.coefs[1] : 0;
+		printf("(-1 * %.3f) / %.3f\n", eq.coefs[0], eq.coefs[1]);
+		eq.sol1 = -1.0 * eq.coefs[0] / eq.coefs[1];
 		printf("\nAfter calulation the solution is\n");
 		printf("%c %.3f\n", eq.sol1 >= 0 ? '+' : '-', absf(eq.sol1));
 		return ;
@@ -49,8 +49,8 @@ void	solve_2(t_equation eq)
 					/ (2.0 * eq.coefs[2]));
 		eq.sol2 = (((-1.0 * eq.coefs[1]) + ft_sqrtf(eq.disc))
 					/ (2.0 * eq.coefs[2]));
-		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
-		printf("%c %.3f\n", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
+		printf("%c %.3f\n", eq.sol1 >= 0 ? '+' : '-', absf(eq.sol1));
+		printf("%c %.3f\n", eq.sol2 >= 0 ? '+' : '-', absf(eq.sol2));
 	}
 	else if (eq.disc == 0)
 	{
@@ -59,7 +59,7 @@ void	solve_2(t_equation eq)
 		printf("-1 * %.3f / (2 * %.3f)\n", eq.coefs[1], eq.coefs[2]);
 		eq.sol1 = (-1.0 * eq.coefs[1]) / (2.0 * eq.coefs[2]);
 		printf("\nAfter calulation the solution is\n");
-		printf("%c %.3f\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+		printf("%c %.3f\n", eq.sol1 >= 0 ? '+' : '-', absf(eq.sol1));
 	}
 	else if (eq.disc < 0){
 		printf("Discriminant is strictly negative.\n");
@@ -69,25 +69,25 @@ void	solve_2(t_equation eq)
 		printf("(-1 * %.3f) + (-1 * sqrt(%.3f)) * i / (2 * %.3f)\n", eq.coefs[1], -1 * eq.disc, eq.coefs[2]);
 		printf("\nAfter calulation the solutions are\n");
 		eq.sol1 = (-1.0 * eq.coefs[1]) / (2.0 * eq.coefs[2]);
-		printf("%c %.3f ", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+		printf("%c %.3f ", eq.sol1 >= 0 ? '+' : '-', absf(eq.sol1));
 
 		eq.sol1 = (-1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefs[2]);
-		printf("%c %.3f i\n", eq.sol1 > 0 ? '+' : '-', absf(eq.sol1));
+		printf("%c %.3f i\n", eq.sol1 >= 0 ? '+' : '-', absf(eq.sol1));
 
 		eq.sol2 = (-1.0 * eq.coefs[1]) / (2.0 * eq.coefs[2]);
-		printf("%c %.3f ", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
+		printf("%c %.3f ", eq.sol2 >= 0 ? '+' : '-', absf(eq.sol2));
 
 		eq.sol2 = (+1.0 * ft_sqrtf(-1.0 * eq.disc)) / (2.0 * eq.coefs[2]);
-		printf("%c %.3f i\n", eq.sol2 > 0 ? '+' : '-', absf(eq.sol2));
+		printf("%c %.3f i\n", eq.sol2 >= 0 ? '+' : '-', absf(eq.sol2));
 	}
 }
 
 void	solve(t_equation eq)
 {
 	printf("\nReduced form:");
-	for (int i = 200000 ; i > 0; i--) {
+	for (int i = 199999 ; i >= 0; i--) {
 		if (eq.coefs[i] != 0) {
-			printf(" %c %.3f * X^%d", eq.coefs[i] > 0 ? '+' : '-', absf(eq.coefs[i]), i);
+			printf(" %c %.3f * X^%d", eq.coefs[i] >= 0 ? '+' : '-', absf(eq.coefs[i]), i);
 			if (eq.degree == 0) eq.degree = i;
 		}
 	}

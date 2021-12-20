@@ -56,7 +56,12 @@ int		main(int ac, char **av)
 			continue ;
 		}
 		i++;
-		eq.coefs[ft_atoi(str, &i)] += eq_sign == 0 ? tmp : -1 * tmp;
+		int power = ft_atoi(str, &i);
+		if (power >= 200000) {
+			printf("power >= 200k. You are mad. Please input a power lower than 200k :)\n");
+			exit(1);
+		}
+		eq.coefs[power] += eq_sign == 0 ? tmp : -1 * tmp;
 	}
 	solve(eq);
 	free(str);
